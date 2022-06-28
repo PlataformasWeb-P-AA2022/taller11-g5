@@ -119,18 +119,18 @@ def editar_departamento(request, id):
 
     return render(request, 'crearDepartamento.html', diccionario)
 
-def crear_numero_telefonico_estudiante(request, id):
+def crear_departamento_edificio(request, id):
     """
     """
-    estudiante = Estudiante.objects.get(pk=id)
+    edificio = Edificio.objects.get(pk=id)
     if request.method=='POST':
-        formulario = NumeroTelefonicoEstudianteForm(estudiante, request.POST)
+        formulario = EdificioDepartamentoForm(estudiante, request.POST)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save()
             return redirect(index)
     else:
-        formulario = NumeroTelefonicoEstudianteForm(estudiante)
-    diccionario = {'formulario': formulario, 'estudiante': estudiante}
+        formulario = EdificioDepartamentoForm(edificio)
+    diccionario = {'formulario': formulario, 'edificio': edficio}
 
-    return render(request, 'crearNumeroTelefonicoEstudiante.html', diccionario)
+    return render(request, 'crearEdificioDepartamento.html', diccionario)

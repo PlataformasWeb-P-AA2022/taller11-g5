@@ -13,11 +13,7 @@ class Edificio(models.Model):
                 self.direccion,
                 self.ciudad,
                 self.tipo) 
-    def costo_no_mayor (self):
-        valor = 0
-        if(self.costo_departamento > 100000):
-            valor
-    
+                
     def obtener_costo_departamentos(self):
         valor = 0;
         for t in self.departamentos.all(): # self.num_telefonicos -> me devuelve un listado de obj de tipo NumeroTelefonico

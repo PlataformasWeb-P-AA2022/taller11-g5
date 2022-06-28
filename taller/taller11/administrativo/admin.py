@@ -10,18 +10,18 @@ from administrativo.models import Estudiante, NumeroTelefonico
 # Se crea una clase que hereda
 # de ModelAdmin para el modelo
 # Estudiante
-class EstudianteAdmin(admin.ModelAdmin):
+class EdificioAdmin(admin.ModelAdmin):
     # listado de atributos que se mostrará
     # por cada registro
     # se deja de usar la representación (str) 
     # de la clase 
-    list_display = ('nombre', 'apellido', 'cedula')
-    search_fields = ('nombre', 'cedula')
+    list_display = ('nombre', 'direccion', 'ciudad', 'tipo')
+    search_fields = ('nombre', 'ciudad')
 
 # admin.site.register se lo altera
 # el primer argumento es el modelo (Estudiante)
 # el segundo argumento la clase EstudianteAdmin
-admin.site.register(Estudiante, EstudianteAdmin)
+admin.site.register(Edificio, EdificioAdmin)
 
 # Agregar la clase NumeroTelefonico para administrar desde
 # interfaz de administración
@@ -30,16 +30,16 @@ admin.site.register(Estudiante, EstudianteAdmin)
 # Se crea una clase que hereda
 # de ModelAdmin para el modelo
 # NumeroTelefonico
-class NumeroTelefonicoAdmin(admin.ModelAdmin):
+class DepartamentoAdmin(admin.ModelAdmin):
     # listado de atributos que se mostrará
     # por cada registro
     # se deja de usar la representación (str) 
     # de la clase 
-    list_display = ('telefono', 'tipo', 'estudiante')
+    list_display = ('nombre_propietario', 'costo_departamento', 'numero_cuartos' 'edficio')
     # se agrega el atributo 
     # raw_id_fields que permite acceder a una interfaz 
     # para buscar los estudiantes y seleccionar el que 
     # se desee
-    raw_id_fields = ('estudiante',)
+    raw_id_fields = ('edificio',)
 
-admin.site.register(NumeroTelefonico, NumeroTelefonicoAdmin)
+admin.site.register(Departamento, DepartamentoAdmin)
