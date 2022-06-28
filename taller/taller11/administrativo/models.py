@@ -17,6 +17,20 @@ class Edificio(models.Model):
         valor = 0
         if(self.costo_departamento > 100000):
             valor
+    
+    def obtener_costo_departamentos(self):
+        valor = 0;
+        for t in self.departamentos.all(): # self.num_telefonicos -> me devuelve un listado de obj de tipo NumeroTelefonico
+            valor = valor + t.costo_departamento
+        return valor
+
+    def obtener_cantidad_cuartos(self):
+        """
+        """
+        valor = 0;
+        for t in self.departamentos.all(): # self.num_telefonicos -> me devuelve un listado de obj de tipo NumeroTelefonico
+            valor = valor + t.numero_cuartos
+        return valor
 
 class Departamento(models.Model):
     nombre_propietario = models.CharField(max_length=100)

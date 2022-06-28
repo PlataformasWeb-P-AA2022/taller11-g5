@@ -35,9 +35,9 @@
           </li>
         {% endfor %}
       </ul>
-        <span><b>Total:</b> {{ e.obtener_costo_telefonos }}</span>
+        <span><b>Número total de cuartos del edificio:</b> {{ e.obtener_cantidad_cuartos}}</span>
         <br>
-        <span><b>Total de números:</b> {{ e.obtener_cantidad_telefonos }}</span>
+        <span><b>Costo total de los departamentos del edificio:</b> {{ e.obtener_costo_departamentos }}</span>
         <br>[<a href="{% url 'crear_numero_telefonico_estudiante' e.id%}">+Teléfono</a>]
     </td>
     <td> <a href="{% url 'obtener_estudiante' e.id %}">ver</a> <br>
