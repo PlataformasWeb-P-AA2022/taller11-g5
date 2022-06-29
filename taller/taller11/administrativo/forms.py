@@ -2,18 +2,18 @@ from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 from django import forms
 
-from administrativo.models import Estudiante, \
-        NumeroTelefonico
+from administrativo.models import Edificio, \
+        Departamento
 
-class EstudianteForm(ModelForm):
+class EdificioForm(ModelForm):
     class Meta:
-        model = Estudiante
-        fields = ['nombre', 'apellido', 'cedula', 'correo']
+        model = Edificio
+        fields = ['nombre', 'direccion', 'ciudad', 'tipo']
         labels = {
             'nombre': _('Ingrese nombre por favor'),
-            'apellido': _('Ingrese apellido por favor'),
-            'cedula': _('Ingrese cédula por favor'),
-            'correo': _('Ingrese correo por favor'),
+            'direccion': _('Ingrese direccion por favor'),
+            'ciudad': _('Ingrese ciudad por favor'),
+            'tipo': _('Ingrese tipo por favor'),
         }
 
 
@@ -21,45 +21,58 @@ class EstudianteForm(ModelForm):
         valor = self.cleaned_data['nombre']
         num_palabras = len(valor.split())
 
-        if num_palabras < 2:
-            raise forms.ValidationError("Ingrese dos nombre por favor")
+        if num_palabras < 1:
+            raise forms.ValidationError("Ingrese un nombre por favor")
         return valor
 
-    def clean_apellido(self):
-        valor = self.cleaned_data['apellido']
+    def clean_direccion(self):
+        valor = self.cleaned_data['direccion']
         num_palabras = len(valor.split())
 
-        if num_palabras < 2:
-            raise forms.ValidationError("Ingrese dos apellidos por favor")
+        if num_palabras < 1:
+            raise forms.ValidationError("Ingrese su direccion por favor")
         return valor
 
-    def clean_cedula(self):
-        valor = self.cleaned_data['cedula']
-        if len(valor) != 10:
-            raise forms.ValidationError("Ingrese cédula con 10 dígitos")
+    def clean_ciudad(self):
+        valor = self.cleaned_data['ciudad']
+        if valor != "L":
+            raise forms.ValidationError("El nombre de la ciudad no puede iniciar con la letra mayúscula L")
         return valor
 
-    def clean_correo(self):
-        valor = self.cleaned_data['correo']
-        if "@" not in valor or "utpl.edu.ec" not in valor:
-            raise forms.ValidationError("Ingrese correo válido para la Universidad")
-        return valor
-
-
-class NumeroTelefonicoForm(ModelForm):
+class DepartamentoForm(ModelForm):
     class Meta:
-        model = NumeroTelefonico
-        fields = ['telefono', 'tipo', 'estudiante',  'costo_plan']
+        model = Departamento
+        fields = ['nombre_propietario', 'costo_departamento', 'numero_cuartos']
+
+    def clean_nombre(self):
+        valor = self.cleaned_data['nombre_propietario']
+        num_palabras = len(valor.split())
+
+        if num_palabras < 3:
+            raise forms.ValidationError("El nombre completo de un propietario no debe tener menos de 3 palabras.")
+        return valor  
+
+    def clean_costo(self):
+        valor = self.cleaned_data['costo_departamento']
+        if(valor > 100000):
+            raise forms.ValidationError("Costo de un departamento no puede ser mayor a $100 mil.")
+        return valor
+
+    def clean_cuartos(self):
+        valor = self.cleaned_data['numero_cuartos']
+        if valor > 0 and valor < 7:
+            raise forms.ValidationError("Número de cuartos no puede ser 0, ni mayor a 7")
+        return valor
 
 
-class NumeroTelefonicoEstudianteForm(ModelForm):
+class EdificioDepartamentoForm(ModelForm):
 
-    def __init__(self, estudiante, *args, **kwargs):
-        super(NumeroTelefonicoEstudianteForm, self).__init__(*args, **kwargs)
-        self.initial['estudiante'] = estudiante
-        self.fields["estudiante"].widget = forms.widgets.HiddenInput()
-        print(estudiante)
+    def __init__(self, departamento, *args, **kwargs):
+        super(EdificioDepartamentoForm, self).__init__(*args, **kwargs)
+        self.initial['departamento'] = departamento
+        self.fields["departamento"].widget = forms.widgets.HiddenInput()
+        print(departamento)
 
     class Meta:
-        model = NumeroTelefonico
-        fields = ['telefono', 'tipo', 'estudiante', 'costo_plan']
+        model = Departamento
+        fields = ['nombre_propietario', 'costo_departamento', 'numero_cuartos']
