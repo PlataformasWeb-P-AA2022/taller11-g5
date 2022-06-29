@@ -20,15 +20,15 @@ def index(request):
     # los registros de la entidad; el listado obtenido
     # se lo almacena en una variable llamada
     # estudiantes
-    estudiantes = Estudiante.objects.all()
+    edificios = Edificio.objects.all()
     # en la variable tipo diccionario llamada informacion_template
     # se agregará la información que estará disponible
     # en el template
-    informacion_template = {'estudiantes': estudiantes, 'numero_estudiantes': len(estudiantes)}
+    informacion_template = {'estudiantes': edificios, 'numero_edificios': len(edificios)}
     return render(request, 'index.html', informacion_template)
 
 
-def obtener_estudiante(request, id):
+def obtener_edificio(request, id):
     """
         Listar los registros del modelo Estudiante,
         obtenidos de la base de datos.
@@ -37,87 +37,87 @@ def obtener_estudiante(request, id):
     # los registros de la entidad; el listado obtenido
     # se lo almacena en una variable llamada
     # estudiantes
-    estudiante = Estudiante.objects.get(pk=id)
+    edificio = Edificio.objects.get(pk=id)
     # en la variable tipo diccionario llamada informacion_template
     # se agregará la información que estará disponible
     # en el template
-    informacion_template = {'estudiante': estudiante}
-    return render(request, 'obtener_estudiante.html', informacion_template)
+    informacion_template = {'edificio': edificio}
+    return render(request, 'obtener_edificio.html', informacion_template)
 
 
-def crear_estudiante(request):
+def crear_edificio(request):
     """
     """
     if request.method=='POST':
-        formulario = EstudianteForm(request.POST)
+        formulario = EdificioForm(request.POST)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save() # se guarda en la base de datos
             return redirect(index)
     else:
-        formulario = EstudianteForm()
+        formulario = EdificioForm()
     diccionario = {'formulario': formulario}
 
-    return render(request, 'crearEstudiante_3.html', diccionario)
+    return render(request, 'crearEdificio.html', diccionario)
 
 
-def editar_estudiante(request, id):
+def editar_edificio(request, id):
     """
     """
-    estudiante = Estudiante.objects.get(pk=id)
+    edificio = Edificio.objects.get(pk=id)
     if request.method=='POST':
-        formulario = EstudianteForm(request.POST, instance=estudiante)
+        formulario = EdificioForm(request.POST, instance=edificio)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save()
             return redirect(index)
     else:
-        formulario = EstudianteForm(instance=estudiante)
+        formulario = EdificioForm(instance=edificio)
     diccionario = {'formulario': formulario}
 
-    return render(request, 'editarEstudiante.html', diccionario)
+    return render(request, 'editarEdificio.html', diccionario)
 
 
-def eliminar_estudiante(request, id):
+def eliminar_edificio(request, id):
     """
     """
-    estudiante = Estudiante.objects.get(pk=id)
-    estudiante.delete()
+    edificio = Edificio.objects.get(pk=id)
+    edificio.delete()
     return redirect(index)
 
 
-def crear_numero_telefonico(request):
+def crear_departamento(request):
     """
     """
 
     if request.method=='POST':
-        formulario = NumeroTelefonicoForm(request.POST)
+        formulario = DepartamentoForm(request.POST)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save()
             return redirect(index)
     else:
-        formulario = NumeroTelefonicoForm()
+        formulario = DepartamentoForm()
     diccionario = {'formulario': formulario}
 
-    return render(request, 'crearNumeroTelefonico.html', diccionario)
+    return render(request, 'crearDepartamento.html', diccionario)
 
 
-def editar_numero_telefonico(request, id):
+def editar_departamento(request, id):
     """
     """
-    telefono = NumeroTelefonico.objects.get(pk=id)
+    departamento = Departamento.objects.get(pk=id)
     if request.method=='POST':
-        formulario = NumeroTelefonicoForm(request.POST, instance=telefono)
+        formulario = DepartamentoForm(request.POST, instance=departamento)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save()
             return redirect(index)
     else:
-        formulario = NumeroTelefonicoForm(instance=telefono)
+        formulario = DepartamentoForm(instance=departamento)
     diccionario = {'formulario': formulario}
 
-    return render(request, 'crearNumeroTelefonico.html', diccionario)
+    return render(request, 'crearDepartamento.html', diccionario)
 
 def crear_numero_telefonico_estudiante(request, id):
     """
