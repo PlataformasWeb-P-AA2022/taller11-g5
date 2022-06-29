@@ -124,13 +124,13 @@ def crear_departamento_edificio(request, id):
     """
     edificio = Edificio.objects.get(pk=id)
     if request.method=='POST':
-        formulario = EdificioDepartamentoForm(estudiante, request.POST)
+        formulario = EdificioDepartamentoForm(edificio, request.POST)
         print(formulario.errors)
         if formulario.is_valid():
             formulario.save()
             return redirect(index)
     else:
         formulario = EdificioDepartamentoForm(edificio)
-    diccionario = {'formulario': formulario, 'edificio': edficio}
+    diccionario = {'formulario': formulario, 'edificio': edificio}
 
     return render(request, 'crearEdificioDepartamento.html', diccionario)
